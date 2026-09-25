@@ -1,0 +1,3 @@
+# Technical synthesis
+
+A robot motion program can be technically correct but still cause problems around people. For example, a robot may follow the correct path, speed, and turning angles, but move too close to a person in a hallway. This could make someone uncomfortable or create a safety problem, especially for children, older people, or people with disabilities. The program tests may show that the robot follows its commands correctly, but they do not show how people will react to it. More evidence is needed, such as testing the robot in a safe shared space and measuring its distance from people. We should also observe whether people can easily understand and predict the robot's movement.

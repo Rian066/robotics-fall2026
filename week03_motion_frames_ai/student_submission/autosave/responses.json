@@ -1,9 +1,13 @@
 {
   "checked_evidence_ids": {
-    "mission_1": "3f58f97cb9b5f7a2"
+    "mission_1": "3f58f97cb9b5f7a2",
+    "mission_2": "e43181f85263eb4a",
+    "mission_3": "21595e667cceeb11"
   },
   "completed_missions": [
-    "mission_1"
+    "mission_1",
+    "mission_2",
+    "mission_3"
   ],
   "content_version": 2,
   "lab_id": "week03_motion_frames_ai",
@@ -101,6 +105,8 @@
       "schema_version": 2,
       "scope": "live"
     },
+    "final.course_reflection": "This activity helped me understand how programming connects to real robot movement. I learned how speed, turning, coordinate frames, and timing affect where a robot moves. I also learned that testing code is important because even if the code looks correct, the actual result can be different.\n\nI liked seeing how ROS 2 connects different parts of the robot and how we can use tests to find mistakes. Using AI was also helpful, but I learned that I still need to check the code and understand what it does.\n\nThis activity made me more interested in robotics because it combines programming with real-world movement. It also showed me that safety and people around the robot are just as important as making the code work.",
+    "final.synthesis": "A robot motion program can be technically correct but still cause problems around people. For example, a robot may follow the correct path, speed, and turning angles, but move too close to a person in a hallway. This could make someone uncomfortable or create a safety problem, especially for children, older people, or people with disabilities. The program tests may show that the robot follows its commands correctly, but they do not show how people will react to it. More evidence is needed, such as testing the robot in a safe shared space and measuring its distance from people. We should also observe whether people can easily understand and predict the robot's movement.",
     "mission_1.attempts": [
       {
         "captured_at": "2026-09-25T19:31:59.824608+00:00",
@@ -8689,8 +8695,8 @@
     "mission_2.initial_output": "To convert a point from the hallway camera frame to the robot's `base_link` frame, use ROS 2 `tf2`. Create a `tf2_ros.Buffer` and `TransformListener`, then look up the transform between the two frames and transform the point.\n\n```python\nimport rclpy\nfrom rclpy.node import Node\nimport tf2_ros\nfrom geometry_msgs.msg import PointStamped\n\nclass PointTransformer(Node):\n    def __init__(self):\n        super().__init__('point_transformer')\n\n        self.tf_buffer = tf2_ros.Buffer()\n        self.tf_listener = tf2_ros.TransformListener(\n            self.tf_buffer, self\n        )\n\n    def transform_point(self, point):\n        try:\n            transform = self.tf_buffer.lookup_transform(\n                'base_link',\n                'hallway_camera',\n                rclpy.time.Time()\n            )\n\n            transformed = tf2_ros.do_transform_point(\n                point, transform\n            )\n\n            return transformed\n\n        except Exception as e:\n            self.get_logger().error(f'Transform failed: {e}')\n            return None\n\n\ndef main():\n    rclpy.init()\n    node = PointTransformer()\n\n    point = PointStamped()\n    point.header.frame_id = 'hallway_camera'\n    point.point.x = 1.0\n    point.point.y = 0.0\n    point.point.z = 0.0\n\n    result = node.transform_point(point)\n\n    if result:\n        print(result)\n\n    node.destroy_node()\n    rclpy.shutdown()\n\n\nif __name__ == '__main__':\n    main()\n```",
     "mission_2.initial_prompt": "Write ROS 2 Python code that converts a point detected by the hallway camera into the robot's base_link frame.\n",
     "mission_2.initial_source": "import rclpy\nfrom rclpy.node import Node\nimport tf2_ros\nfrom geometry_msgs.msg import PointStamped\nfrom tf2_geometry_msgs import do_transform_point\n\nclass PointTransformer(Node):\ndef **init**(self):\nsuper().**init**('point_transformer')\nself.tf_buffer = tf2_ros.Buffer()\nself.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)\n\ndef transform_point(self, point):\n    try:\n        transform = self.tf_buffer.lookup_transform(\n            'base_link',\n            'hallway_camera',\n            rclpy.time.Time()\n        )\n        return do_transform_point(point, transform)\n    except Exception as e:\n        self.get_logger().error(f'Transform failed: {e}')\n        return None\n\ndef main():\nrclpy.init()\nnode = PointTransformer()\n\npoint = PointStamped()\npoint.header.frame_id = 'hallway_camera'\npoint.point.x = 1.0\npoint.point.y = 0.0\npoint.point.z = 0.0\n\nresult = node.transform_point(point)\n\nif result:\n    print(result)\n\nnode.destroy_node()\nrclpy.shutdown()\n\nif **name** == '**main**':\nmain()\n",
-    "mission_2.live_issue": "",
-    "mission_2.live_pending": false,
+    "mission_2.live_issue": "The live camera verification could not complete. Also, my laptop overheating and laggy and can't continue this.",
+    "mission_2.live_pending": true,
     "mission_2.snapshot": {
       "captured_at": "2026-09-25T19:14:10.320081+00:00",
       "frame_chain": [
@@ -8754,6 +8760,20 @@
       }
     },
     "mission_2.synthesis": "The first AI response made assumptions about the frames and timestamps. The improved prompt makes these details clear. A wrong transform could make the robot think a person is in the wrong location. The rotated-coordinate test checks this. If TF is unavailable, the robot should not move.\n",
+    "mission_3.ai_disclosure": "I used ChatGPT to help create the ROS 2 code and tests. I personally reviewed the speeds, turn directions, durations, and code errors. I also ran the tests and fixed the problems I found.",
+    "mission_3.assigned_pattern": "alternating_arcs",
+    "mission_3.assumptions": "The AI assumed the robot uses meters, seconds, and radians. It assumed positive turning is left and negative turning is right. It also assumed the robot follows the commanded speed for the full duration.",
+    "mission_3.evidence_analysis": "The tests show that my pattern uses valid speeds, positive durations, and the correct type of motion. The 7 course tests passed. These tests do not prove the robot will move perfectly in the real world. An additional live robot test would help confirm the actual path.",
+    "mission_3.live_issue": "My PC is heating up and laggy. I can't do this now.",
+    "mission_3.live_pending": true,
+    "mission_3.modifications": "I replaced the unfinished code with four arc segments. I used 0.15 m/s forward speed and \u00b10.50 rad/s turning speed to make a 0.30 m radius. Each arc lasts about 1.57 seconds for a 45\u00b0 turn. I also added `ValueError` for an unknown pattern name. The pattern and speed tests will check these changes.",
+    "mission_3.original_output": "I will use a forward speed of 0.15 m/s. For an arc radius of 0.30 m, angular speed is calculated using \u03c9 = v/R. This gives \u03c9 = 0.15/0.30 = 0.50 rad/s.\n\nA 45\u00b0 turn is \u03c0/4 radians, so the duration of each arc is (\u03c0/4)/0.50, which is about 1.571 seconds. Positive angular velocity turns left and negative angular velocity turns right.\n\nThe pattern therefore uses four segments with angular velocities +0.50, -0.50, +0.50, and -0.50 rad/s. All segments use a forward speed of 0.15 m/s and a duration of about 1.571 seconds. These values are within the course speed and time limits. The positive and negative turns cancel, so the robot should finish facing its initial direction.\n\nThe wrapper is responsible for repeatedly publishing each segment and sending the final zero-velocity command, so build_pattern only needs to return the segment list.\n\nI would test that there are four segments, all linear speeds are 0.15 m/s, the angular speeds alternate between +0.50 and -0.50 rad/s, each duration is about 1.571 seconds, each radius is 0.30 m, and an unknown pattern name raises ValueError.",
+    "mission_3.original_prompt": "Create the alternating_arcs pattern with four forward arcs: +45\u00b0, -45\u00b0, +45\u00b0, -45\u00b0. Each arc should have a 0.30 m radius. Use safe speeds within the course limits and finish facing the starting direction. Only implement build_pattern using the existing Segment class. Raise ValueError for an unknown pattern.",
+    "mission_3.original_source": "import math\n\ndef build_pattern(pattern_name: str) -> list[Segment]:\n    if pattern_name != \"alternating_arcs\":\n        raise ValueError(\"Unknown pattern name\")\n\n    speed = 0.15\n    radius = 0.30\n    angular_speed = speed / radius\n    duration = (math.pi / 4) / angular_speed\n\n    return [\n        Segment(speed, angular_speed, duration),\n        Segment(speed, -angular_speed, duration),\n        Segment(speed, angular_speed, duration),\n        Segment(speed, -angular_speed, duration),\n    ]",
+    "mission_3.problems": "I did not find major errors. I checked the speeds, 45\u00b0 turns, 0.30 m radius, timing, and segment order to make sure they matched the requirements.",
+    "mission_3.saved_specification": "The robot will move through four forward arcs, turning +45\u00b0, -45\u00b0, +45\u00b0, and -45\u00b0, each with a radius of 0.30 m. I will use a safe forward speed and keep the turning speed within the limits. The robot will stop after each arc and send a final stop command at the end. The motion is successful if all four arcs are close to a 0.30 m radius and 45\u00b0 turn, and the robot finishes facing its original direction.",
+    "mission_3.specification": "The robot will move through four forward arcs, turning +45\u00b0, -45\u00b0, +45\u00b0, and -45\u00b0, each with a radius of 0.30 m. I will use a safe forward speed and keep the turning speed within the limits. The robot will stop after each arc and send a final stop command at the end. The motion is successful if all four arcs are close to a 0.30 m radius and 45\u00b0 turn, and the robot finishes facing its original direction.",
+    "mission_3.test_plan": "Pattern test: Check that the robot makes four arcs in the order left, right, left, right.\n\nVelocity test: Check that all speeds stay within 0.22 m/s and 0.80 rad/s.\n\nStop test: Check that the robot sends a final zero command and stops after the last arc.",
     "walkthrough.completed": [
       0,
       1,
@@ -8781,19 +8801,21 @@
     ]
   },
   "schema_version": 1,
-  "stage": "mission_2",
+  "stage": "final",
   "student": {
     "course_id": "rian.alif58@login.cuny.edu",
     "email": "Rian.alif58@login.cuny.edu",
     "name": "Rian M Alif"
   },
-  "updated_at": "2026-09-25T20:32:19.205523+00:00",
+  "updated_at": "2026-09-25T21:07:31.734401+00:00",
   "visited_stages": [
     "intro",
     "concepts",
     "preflight",
     "mission_1",
-    "mission_2"
+    "mission_2",
+    "mission_3",
+    "final"
   ],
   "walkthrough_index": 4
 }

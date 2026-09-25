@@ -1,0 +1,1 @@
+Create the alternating_arcs pattern with four forward arcs: +45°, -45°, +45°, -45°. Each arc should have a 0.30 m radius. Use safe speeds within the course limits and finish facing the starting direction. Only implement build_pattern using the existing Segment class. Raise ValueError for an unknown pattern.

@@ -1,0 +1,34 @@
+{
+  "files": {
+    "autosave/responses.json": "2d412e94c0d953c87d67aa678d17d99534d04f6e11e14342bfb0b3b458f20666",
+    "autosave/responses.md": "4f6cd24b9b059c0f37ca364e0c0550201cf789975b51624e685fd208011803e4",
+    "final_reflection.md": "80c0cf51260cc1e7d768d8180d5d71c75809ff3db394a14c586936a76b3186a1",
+    "final_synthesis.md": "ad7fa395c2040b44e3b95135fac89a7d1912671752c88f0490dcbcb40cf1c968",
+    "mission_1/evidence.png": "742c4d8d05d5e7834f881d916089e4be2840ceb5618e9a1f99166a71e6eb7feb",
+    "mission_1/explanation.md": "0be8de0c55974440530de0da3ae2ec162b314f3922705cc8392f6fe324e827fd",
+    "mission_1/measurements.csv": "5b6971d46e1b6685b380d4fac7a8f178bb8fb327b77fc12b46d857c147a77787",
+    "mission_1/submission.json": "ce5ea283a7ae3e1c980502c5aa060ccef4d702b68d28d010b548ed56e04a772d",
+    "mission_2/evidence.png": "9cb00ca86942d6e75cec5ccb9d408167d2713cd0078277b721f42f7bb2e63503",
+    "mission_2/explanation.md": "db1e0302ddbed6de6a57929038491f9e5cc805f4807de2efaf167e35e48eada7",
+    "mission_2/measurements.csv": "630886a4bce17eef70b95da35eff0170036db9a2b6876865cfd2f294ee9deb21",
+    "mission_2/submission.json": "b079d5da3cb1fc64c94a0a38b89c65c6012a45a2971970a9c8047d20e3cbfa5f",
+    "mission_3/explanation.md": "9f57f8ce1717d65970d76ddb2dbf7c577f76a92091bb3d57ecba8ec0647bc5b6",
+    "mission_3/measurements.csv": "5999ac489195c8c347d7c54db0db5a0f82b072ff25658538670d90f50c469b6c",
+    "mission_3/submission.json": "785c9b0eeae24ca6c5e1e807cfaa964033989f49747c81b6bdd092b50d021e17",
+    "student.json": "f54d4781b46d29c5017aabbdda63851e709796b67183a95218ebbdc8cbc15762"
+  },
+  "generated_at": "2026-10-10T00:06:22.621084+00:00",
+  "lab_id": "week05_sensors_uncertainty",
+  "mission_signatures": {
+    "mission_1": "7882e15b34c3bdb9",
+    "mission_2": "249974a7288cf137",
+    "mission_3": "67bf98f9630e5bcf"
+  },
+  "response_signature": "c420dd05c443387a",
+  "schema_version": 2,
+  "student": {
+    "course_id": "CSCI 39536 ",
+    "email": "Rian.Alif58@login.cuny.edu",
+    "name": "Rian M Alif"
+  }
+}
